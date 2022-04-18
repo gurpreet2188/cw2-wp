@@ -1,0 +1,30 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--cw2-bg);
+    color: rgb(var(--cw2-fontNormal));
+}
+
+a {
+    text-decoration: none;
+}
+
+.cw2-hide {
+    display: none;
+} 
+
+.fa-moon, .fa-sun {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: fit-content;
+    width: fit-content;
+    color: var(--cw2-colorPrimary);
+}

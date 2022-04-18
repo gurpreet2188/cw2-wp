@@ -1,0 +1,63 @@
+$primary-color: #e2051b;
+$seondary-color: #FFF5F5;
+$text-disabled: rgba($color: #000000, $alpha: 0.5); 
+$text-normal: rgba($color: #000000, $alpha: 0.8);
+$font-size-big: 2rem;
+$font-size-mid: 1.3rem;
+$font-size-small: 0.8rem;
+
+
+$breakpoints : (
+    'mobileSmallest': 321px,
+    'mobileSmaller': 374px,
+    'mobilesmall': 375px,
+    'mobile': 480px,
+    'tabletMedium': 770px,
+    'tabletLarge': 1000px,
+    'desktop': 1200px
+);
+
+:root {
+    --cw2-bg: #fff;
+    --cw2-bg2: #ffedef;
+    --cw2-fontDisabled: 33,33,33;
+    --cw2-fontNormal: 51,51,51;
+    --cw2-colorPrimary: #e2051b;
+}
+
+html[data-theme="light"] {
+    --cw2-bg: #fff;
+    --cw2-bg2: #ffedef;
+    --cw2-fontDisabled: 33,33,33;
+    --cw2-fontNormal: 51,51,51;
+    --cw2-colorPrimary: #e2051b;
+}
+
+html[data-theme="dark"] {
+    --cw2-bg: #121212;
+    --cw2-bg2: #0a0405;
+    --cw2-fontDisabled: 238,238,238;
+    --cw2-fontNormal: 241,241,241;
+    --cw2-colorPrimary: #e25866;
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        --cw2-bg: #fff;
+        --cw2-bg2: #ffedef;
+        --cw2-fontDisabled: 33,33,33;
+        --cw2-fontNormal: 51,51,51;
+        --cw2-colorPrimary: #e2051b;
+    }
+}
+
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --cw2-bg: #121212;
+        --cw2-bg2: #0a0405;
+        --cw2-fontDisabled: 238,238,238;
+        --cw2-fontNormal: 241,241,241;
+        --cw2-colorPrimary: #e25866;
+    }
+}
