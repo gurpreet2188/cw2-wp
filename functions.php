@@ -17,6 +17,7 @@
         'not_found_in_trash' => 'No Events found in Trash',
         'parent_item_colon' => '',
         'menu_name' => 'Events',
+        'register_meta_box_cb' => 'cw2_date_picker'
         );
         //register post type
         register_post_type ( 'event', array(
@@ -177,3 +178,39 @@ function cw2_custom_post_load_more() {
         }
        wp_reset_postdata();
    }
+
+// add custom meta box for event calendar
+// NOTE: this lacks normal security to add/save/update the post in cw2_event_date_save function.
+   function cw2_event_date_meta_box () {
+       add_meta_box( 'cw2_event', 'Date', 'cw2_event_date_html');
+   }
+
+   add_action( 'add_meta_boxes_event', 'cw2_event_date_meta_box');
+
+   function cw2_event_date_html($post) {
+        $value = get_post_meta( $post->ID, '_cw2_event', true );
+        var_dump($value);
+        ?>
+                <input type="date" name="cw2_event_date_feild" value="<?php echo esc_attr( $value )?>" size="25"/>
+        <?php
+   }
+
+   function cw2_event_date_save($post_id) {
+       if(array_key_exists('cw2_event_date_feild', $_POST)) {
+           update_post_meta( $post_id, '_cw2_event', $_POST['cw2_event_date_feild']);
+       }
+   }
+
+   add_action('save_post_event', 'cw2_event_date_save');
+
+   function cw2_get_event_date ($content) {
+       global $post;
+       $value = esc_attr( get_post_meta( $post->ID, '_cw2_event', true ) );
+       $date = "<div class=''>$value</div>";
+       return $date.$content;
+   }
+
+   add_filter('the_content', 'cw2_get_event_date');
+
+
+   

@@ -56,7 +56,8 @@
                         )
                     );
                 ?>
-
+        <div>
         <button class="home-header-top-themeswitch home-header-top-themeswitch-mobile"><span class="home-header-top-themeswitch-circle"><i class="fa fa-sun fa-theme"></i></span></button>
 		</nav>
+
     </header>
