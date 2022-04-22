@@ -20,6 +20,7 @@ $breakpoints : (
 :root {
     --cw2-bg: #fff;
     --cw2-bg2: #ffedef;
+    --cw2-bg3: #fffced;
     --cw2-fontDisabled: 33,33,33;
     --cw2-fontNormal: 51,51,51;
     --cw2-colorPrimary: #e2051b;
@@ -28,6 +29,7 @@ $breakpoints : (
 html[data-theme="light"] {
     --cw2-bg: #fff;
     --cw2-bg2: #ffedef;
+    --cw2-bg3: #fffced;
     --cw2-fontDisabled: 33,33,33;
     --cw2-fontNormal: 51,51,51;
     --cw2-colorPrimary: #e2051b;
@@ -36,6 +38,7 @@ html[data-theme="light"] {
 html[data-theme="dark"] {
     --cw2-bg: #121212;
     --cw2-bg2: #0a0405;
+    --cw2-bg3: #0a0904;
     --cw2-fontDisabled: 238,238,238;
     --cw2-fontNormal: 241,241,241;
     --cw2-colorPrimary: #e25866;
@@ -45,6 +48,7 @@ html[data-theme="dark"] {
     :root {
         --cw2-bg: #fff;
         --cw2-bg2: #ffedef;
+        --cw2-bg3: #fffced;
         --cw2-fontDisabled: 33,33,33;
         --cw2-fontNormal: 51,51,51;
         --cw2-colorPrimary: #e2051b;
@@ -56,6 +60,7 @@ html[data-theme="dark"] {
     :root {
         --cw2-bg: #121212;
         --cw2-bg2: #0a0405;
+        --cw2-bg3: #0a0904;
         --cw2-fontDisabled: 238,238,238;
         --cw2-fontNormal: 241,241,241;
         --cw2-colorPrimary: #e25866;

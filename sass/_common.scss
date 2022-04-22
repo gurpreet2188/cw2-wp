@@ -10,8 +10,15 @@ body {
     color: rgb(var(--cw2-fontNormal));
 }
 
+button {
+    color: rgb(var(--cw2-fontNormal));
+}
+
 a {
     text-decoration: none;
+}
+p {
+    margin: 0;
 }
 
 .cw2-hide {
@@ -27,4 +34,8 @@ a {
     height: fit-content;
     width: fit-content;
     color: var(--cw2-colorPrimary);
+}
+
+.fa {
+    margin: auto;
 }

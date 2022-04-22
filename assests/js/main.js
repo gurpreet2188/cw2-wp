@@ -12,7 +12,8 @@ $(document).ready(function () {
 });
 
 document.addEventListener('DOMContentLoaded', function(e){
-	window.scrollTo(0, 0);
+
+	// window.scrollTo(0, 0);
 
 	//navmen 
 	const navBtn = document.querySelectorAll('.home-header-top-btnNav')[0];
@@ -87,7 +88,10 @@ document.addEventListener('DOMContentLoaded', function(e){
 		})
 	})
 
-	
+	document.querySelectorAll('.close-sticky')[0].addEventListener('click', function () {
+		document.querySelectorAll('.home-announcement')[0].style.display = 'none';
+		document.querySelectorAll('.home-header-top')[0].style.marginTop = '0';
+	})
 	
 
 	
@@ -98,19 +102,19 @@ window.onscroll = function() {
 	
 
 	if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
-		document.querySelectorAll(".home-header")[0].style.gap = "1rem";
-		document.querySelectorAll(".home-header")[0].style.padding = "0.5rem calc(100vw / 8.5)";
-		document.querySelectorAll(".home-header")[0].style.borderBottom = "1px solid rgba(var(--cw2-fontNormal),0.2)";
-		document.querySelectorAll(".home-header")[0].style.backgroundColor ="var(--cw2-bg)";
+		// document.querySelectorAll(".home-header")[0].style.gap = "1rem";
+		// document.querySelectorAll(".home-header")[0].style.padding = "0.5rem calc(100vw / 8.5)";
+		// document.querySelectorAll(".home-header")[0].style.borderBottom = "1px solid rgba(var(--cw2-fontNormal),0.2)";
+		// document.querySelectorAll(".home-header")[0].style.backgroundColor ="var(--cw2-bg)";
 		// document.querySelectorAll(".home-header")[0].style.boxShadow = "10px 20px 30px rgba(0,0,0,0.1)";
-		document.querySelectorAll(".home-header-top-brand-img")[0].style.transform = "scale(0.5, 0.5)";
+		// document.querySelectorAll(".home-header-top-brand-img")[0].style.transform = "scale(0.5, 0.5)";
 	} else {
-		document.querySelectorAll(".home-header")[0].style.gap = "2rem";
-		document.querySelectorAll(".home-header")[0].style.padding = "2rem calc(100vw / 8.5)";
-		document.querySelectorAll(".home-header")[0].style.borderBottom = "1px solid rgba(var(--cw2-fontNormal),0.0)";
-		document.querySelectorAll(".home-header")[0].style.backgroundColor ="var(--cw2-bg2)";
+		// document.querySelectorAll(".home-header")[0].style.gap = "2rem";
+		// document.querySelectorAll(".home-header")[0].style.padding = "2rem calc(100vw / 8.5)";
+		// document.querySelectorAll(".home-header")[0].style.borderBottom = "1px solid rgba(var(--cw2-fontNormal),0.0)";
+		// document.querySelectorAll(".home-header")[0].style.backgroundColor ="var(--cw2-bg2)";
 		// document.querySelectorAll(".home-header")[0].style.boxShadow = "10px 20px 30px rgba(0,0,0,0)";
-		document.querySelectorAll(".home-header-top-brand-img")[0].style.transform = "scale(1, 1)";
+		// document.querySelectorAll(".home-header-top-brand-img")[0].style.transform = "scale(1, 1)";
 	}
 };
 
