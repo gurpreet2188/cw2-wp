@@ -24,14 +24,16 @@
         <div class="home-announcement">
             <div class="home-announcement-container">
                 <i class="fa fa-solid fa-bullhorn"></i>
-                <p><?php cw2_announcement(1)?></p>
+                <?php cw2_announcement(1)?>
                 <button class="close-sticky"><i class="fa fa-solid fa-xmark"></i></button>
             </div>
         </div>
    
     <header class="home-header">
         <div class="home-header-top">
-
+        <a class="home-header-top-brand-mobile" href="#">
+               <?php logoSvg()?>
+                </a>
                 <div class="home-header-top-empty">
                     
                 </div>
@@ -65,11 +67,11 @@
         <?php 
                     if(function_exists('the_custom_logo')) {
                         // the_custom_logo();
-                        $custom_logo_id = get_theme_mod('custom_logo');
-                        $logo = wp_get_attachment_image_src($custom_logo_id);
+                        // $custom_logo_id = get_theme_mod('custom_logo');
+                        // $logo = wp_get_attachment_image_src($custom_logo_id);
                     }
                 ?>	    
-                <a class="home-header-nav-brand" href="index.html">
+                <a class="home-header-nav-brand-desktop" href="#">
                <?php logoSvg()?>
                 </a>
                 

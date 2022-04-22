@@ -1,29 +1,29 @@
 jQuery( document ).ready( function(){
     var page = 2;
-    function load (category, appendTo){
-        var data = {
-            'action': 'cw2_cw2_filter',
-            // 'page': page,
-            // 'security': wpAjax.security,
-            'category': category
-          };
+    function load (search, appendTo){
+      var data = {
+        'action': 'cw2_shop_search',
+        // 'page': page,
+        // 'security': wpAjax.security,
+        's': search
+      };
           jQuery.post( wpAjax.ajaxurl, data, function( response ) {
-              
+              // console.log(response)
             if( $.trim(response) != 0 ) {
-              jQuery( appendTo ).append( response );
-            //   page++;
+              jQuery( appendTo ).html( response );
+              page++;
             } else {
-                
-            //   jQuery( btnType ).hide();
-            //   jQuery( ".no-more-post" ).html( "No More Post Available" );
+            
             }
           });
     }
-
     jQuery( function($) {
-      jQuery( 'body' ).on( 'click', '.utensils', function() {
-          load('food', '.shops-list-container');
-      });
+      $('#cw2-search-shop').submit(function(e){
+          e.preventDefault();
+          console.log($('input[name="cw2-search-shop-value"]').val());
+          load($('input[name="cw2-search-shop-value"]').val(), '.shops-list-container');
+        })
     });
+      
 
-  });
+    });

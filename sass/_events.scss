@@ -1,14 +1,24 @@
 .events {
-    width: 80%;
-    height: 32rem;
+    // width: 80%;
+    // height: 32rem;
+    // @include respond-to(mobile) {
+    //     width: 100%;
+    //     height:10rem;
+    // }
     &-carousel {
         position: relative;
-        // width: 80%;
-        height: 50rem;
+        // width:95vw;
+        // height: 50rem;
+
+        @include respond-to(mobile) {
+            // height: auto;
+            // width: 80%;
+            // margin: auto;
+        }
         &-overlay {
             z-index: 2;
-            width: 100%;
-            height: 100%;
+            width: 95vw;
+            height: 60%;
             position: absolute;
             top: 0;
             left: 0;
@@ -23,11 +33,16 @@
             // position: relative;
             // z-index: 1;
             // color: #fff;
-            width: 100%;
-            height: 100%;
+            width: 95vw;
+            height:60%;
             background-repeat: no-repeat;
-            background-size: cover;
-
+            background-size: 100%;
+            background-attachment: fixed;
+            background-position: center center;
+            // @include respond-to(mobile) {
+            //     background-repeat: no-repeat;
+            //     background-size: cover;
+            // }
             
             
         }

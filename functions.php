@@ -19,7 +19,8 @@ function cw2_add_scripts(){
   wp_enqueue_script('cw2-js', get_template_directory_uri() . "/assests/js/main.js", array(), $version, true);
 
   wp_register_script('custom-script', get_template_directory_uri() . "/assests/js/loadmore.js", array('jquery'), false, true);
-  wp_register_script('cw2_filter', get_template_directory_uri() . "/assests/js/search.js", array('jquery'), NULL, true);
+  wp_register_script('cw2_filter', get_template_directory_uri() . "/assests/js/filter.js", array('jquery'), NULL, true);
+  wp_register_script('cw2_search', get_template_directory_uri() . "/assests/js/search.js", array('jquery'), NULL, true);
   $script_data_array = array(
       'ajaxurl' => admin_url('admin-ajax.php'),
       'security' => wp_create_nonce( 'load_more_posts' ),
@@ -31,7 +32,9 @@ function cw2_add_scripts(){
 
     wp_localize_script( 'custom-script', 'blog', $script_data_array );
     wp_localize_script( 'cw2_filter', 'wpAjax', $script_data_array);
+    wp_localize_script( 'cw2_search', 'wpAjax', $script_data_array);
     wp_enqueue_script( 'cw2_filter' );
+    wp_enqueue_script( 'cw2_search' );
     wp_enqueue_script( 'custom-script' );
 }
     add_action('wp_enqueue_scripts', 'cw2_add_scripts');
@@ -432,79 +435,76 @@ function cw2_shop_save($post_id) {
 
 // comman custom shops cards
 
-function cw2_shop_cards ($limit) {
-    $wp_query = new WP_Query(array('post_type'=>'shop', 'post_status'=>'publish', 'posts_per_page'=>$limit)); 
-    while ( $wp_query->have_posts() ) : $wp_query->the_post();
+function cw2_shop_cards ($query, $title, $limit) {
+    if(!$query) {
+        $wp_query = new WP_Query(array('post_type'=>'shop', 'post_status'=>'publish', 'posts_per_page'=>$limit)); 
+
+    } else {
+        $wp_query = $query;
+    }
     ?> 
-    <div class="shops-list-container-cards-card">
-                <div class="shops-list-container-cards-card-img">
-                   <?php the_post_thumbnail(); ?>
-                </div>
-
-                <div class="shops-list-container-cards-card-content">
-                    <div class="shops-list-container-cards-card-title">
-                       <h2><?php get_the_title()?></h2>
-                    </div>
-                    <div class="shops-list-container-cards-card-loc">
-                    <i class="fa fa-solid fa-location-dot"></i>
-                    <?php echo get_post_meta( get_the_ID(), '_cw2_shop_find', true );?>
-                    </div>
-    
-                    <div class="shops-list-container-cards-card-call">
-                    <i class="fa-solid fa-phone"></i>
-                    <?php echo get_post_meta( get_the_ID(), '_cw2_shop_contact', true ); ?>
-                    </div>
-    
-                    <div class="shops-list-container-cards-card-hours">
-                    <i class="fa-solid fa-clock"></i>
-                    <?php  echo get_post_meta( get_the_ID(), '_cw2_shop_open', true ); ?>
-                    -
-                    <?php echo get_post_meta( get_the_ID(), '_cw2_shop_close', true );?>
-                    </div>
-                    <div class="shops-list-container-cards-card-cat">
-                    <?php get_the_category()?>
-                    </div>
-                </div>
-            </div>
-    
+        <div class="shops-list-container-title">
+            <h2><?php echo $title ?></h2>
+        </div>
+        <div class="shops-list-container-cards">
     <?php
-    endwhile;
-}
-
-
-//search 
-
-function mySearchFilter( $query ) {
-    $post_type = $_GET['post_type'];
-    if (!$post_type) {
-       $post_type = 'any';
-    }
-    if ( $query->is_search ) {
-       $query->set( 'post_type', array( esc_attr( $post_type ) ) );
-    }
-    return $query;
-}
-add_filter( 'pre_get_posts', 'mySearchFilter' );
-
-function cw2_search () {
-    $wp_query = new WP_Query( array(
-        'post_type' => 'shops',
-        'post_status'=>'publish',
-        'posts_per_page' => -1,
-        's' => 'food'
-    ));
-
     
-    
-    var_dump($wp_query->have_posts());
     while ( $wp_query->have_posts() ) : $wp_query->the_post();
-    ?>
-    <div><?php the_post_thumbnail();?> results</div>
-    <?php
+    // var_dump(get_post_type());
+    ?> 
     
+        <div class="shops-list-container-cards-card">
+                    <div class="shops-list-container-cards-card-img">
+                    <?php the_post_thumbnail(); ?>
+                    </div>
+
+                    <div class="shops-list-container-cards-card-content">
+                        <div class="shops-list-container-cards-card-content-title">
+                        <h2><?php echo get_the_title()?></h2>
+                        </div>
+                        <div class="shops-list-container-cards-card-content-loc">
+                        <i class="fa fa-solid fa-location-dot"></i>
+                        <?php echo get_post_meta( get_the_ID(), '_cw2_shop_find', true );?>
+                        </div>
+        
+                        <div class="shops-list-container-cards-card-content-call">
+                        <i class="fa-solid fa-phone"></i>
+                        <?php echo get_post_meta( get_the_ID(), '_cw2_shop_contact', true ); ?>
+                        </div>
+        
+                        <div class="shops-list-container-cards-card-content-hours">
+                        <i class="fa-solid fa-clock"></i>
+                        <?php  echo get_post_meta( get_the_ID(), '_cw2_shop_open', true ); ?>
+                        -
+                        <?php echo get_post_meta( get_the_ID(), '_cw2_shop_close', true );?>
+                        </div>
+                        <div class="shops-list-container-cards-card-content-cat">
+                        <?php get_the_category()?>
+                        </div>
+                    </div>
+        </div>
+    <?php
     endwhile;
 
+    echo '  </div>';
 }
+
+
+//search  all
+
+// function mySearchFilter( $query ) {
+//     $post_type = $_GET['post_type'];
+//     if (!$post_type) {
+//        $post_type = 'any';
+//     }
+//     if ( $query->is_search ) {
+//        $query->set( 'post_type', array( esc_attr( $post_type ) ) );
+//     }
+//     return $query;
+// }
+// add_filter( 'pre_get_posts', 'mySearchFilter' );
+
+
 
 // function cw2_search_by_ajax() {
 //     // check_ajax_referer('load_more_posts', 'security');
@@ -567,8 +567,7 @@ add_action( 'init', 'news_my_taxonomy');
     function cw2_cw2_filter () {
         
         $category = $_POST['category'];
-       
-        echo($category);
+    
             $wp_query = new WP_Query(array(
 
                 'post_type' =>  'shop',
@@ -578,17 +577,85 @@ add_action( 'init', 'news_my_taxonomy');
                 'category_name' => $category
             ));
             
-            var_dump($wp_query->have_posts());
+            // var_dump($wp_query->have_posts());
             if($wp_query->have_posts()){
-                while ( $wp_query->have_posts() ) : $wp_query->the_post();
-                the_post_thumbnail(); 
-                endwhile; 
+                
+               cw2_shop_cards($wp_query, 'Showing only: '.$category, 4);
+               
             }
             wp_die();
     }
 
     add_action('wp_ajax_nopriv_cw2_cw2_filter', 'cw2_cw2_filter');
     add_action('wp_ajax_cw2_cw2_filter', 'cw2_cw2_filter');
+
+    function title_filter( $where, &$wp_query ) {
+        global $wpdb;
+        if ( $search_term = $wp_query->get( 'search_post_title' ) ) {
+            $where .= ' AND ' . $wpdb->posts . '.post_title LIKE \'%' . $wpdb->esc_like( $search_term ) . '%\'';
+        }
+        return $where;
+    }
+
+    function cw2_shop_search_filter($query){
+
+        if ($query->is_search && !is_admin()) {
+            $query->set('post_type', 'shop');
+        }
+        // var_dump($query);
+
+        return $query;
+    }
+   
+
+    
+    
+    function cw2_shop_search () {
+        // var_dump($_POST);
+        add_filter('pre_get_posts', 'cw2_shop_search_filter');
+        add_filter( 'posts_where', 'title_filter', 10, 2 );
+        $search = $_POST['s'];
+        // var_dump($search);
+        if($search) {
+            $wp_query = new WP_Query( array(
+                'post_type' => 'shop',
+                'post_status'=>'publish',
+                'posts_per_page' => 6,
+                // 'order' => 'ASC',
+                's' => $search,
+            ));
+           
+            if(!$wp_query->have_posts()){
+                $wp_query = new WP_Query( array(
+                    'post_type' => 'shop',
+                    'post_status'=>'publish',
+                    'posts_per_page' => 6,
+                    // 'order' => 'ASC',
+                    'category_name' => $search,
+                ));
+            }
+            // remove_filter( 'pre_get_posts', 'cw2_shop_search_filter' );
+            
+        } else {
+            $wp_query = new WP_Query( array(
+                'post_type' => 'shop',
+                'post_status'=>'publish',
+                'posts_per_page' => 6,
+            ));
+        }
+        remove_filter( 'posts_where', 'title_filter' );
+        remove_filter( 'pre_get_posts', 'cw2_shop_search_filter' );
+        
+        if($wp_query->have_posts()){
+            cw2_shop_cards($wp_query, $search ? 'Search Results for: '.$search : 'All Shops', 6);
+        }
+        wp_die();
+        
+    
+    }
+
+    add_action('wp_ajax_nopriv_cw2_shop_search', 'cw2_shop_search');
+    add_action('wp_ajax_cw2_shop_search', 'cw2_shop_search');
 
 
 // announcement
@@ -601,7 +668,8 @@ function cw2_announcement($limit) {
 
     while ( $wp_query->have_posts() ) : $wp_query->the_post();
                 ?>
-                    <p><?php the_excerpt() ?></p>
+                     <p><?php the_excerpt() ?></p>
+                     <p><marquee behavior="" width = "100%" direction="" loop="4" scrolldelay = "200"><?php the_excerpt() ?></marquee> </p>
                 <?php
     endwhile; 
 }
@@ -631,11 +699,11 @@ function cw2_shop_common_posts ($name, $limit, $category) {
                 <?php the_post_thumbnail() ?>
             </div>
             <div class="home-body-all-container-posts-post-content">
-                <div class="home-body-all-container-posts-post-content-date">
-                        <p><?php echo get_the_date('d-m-y')?></p>
-                </div>
                 <div class="home-body-all-container-posts-post-content-title">
                     <h2><?php echo $category === 'promo' ? get_post_meta( get_the_ID(), '_cw2_shop_promo', true ): the_title() ?></h2>
+                </div>
+                <div class="home-body-all-container-posts-post-content-date">
+                        <p><?php echo get_the_date('d-m-y')?></p>
                 </div>
             </div>
         </div>
@@ -658,26 +726,28 @@ function cw2_events_carousel() {
     if ($wp_query->have_posts()) {
         $count=0;
         // echo "<div id='carouselExampleIndicators' class='carousel slide' data-bs-ride='carousel'>";
-        echo "<div class='carousel-inner'>";
+        echo "<div class='home-body-all-events-carousel-inner carousel-inner'>";
         
         while ( $wp_query->have_posts() ) : $wp_query->the_post();
         $date_start = strtotime(get_post_meta( get_the_ID(), '_cw2_event_start', true ));
         $date_end = strtotime(get_post_meta( get_the_ID(), '_cw2_event_end', true ));
-                echo "<div class='carousel-item",$count === 0 ? " active" : "","'>";
+                echo "<div class='home-body-all-events-carousel-item carousel-item",$count === 0 ? " active" : "","'>";
                 ?>  
-                    <div class="events-carousel">
-                            <div class="events-carousel-img" style="background-image: url('<?php echo get_the_post_thumbnail_url(get_the_ID(),'full')?>')">
-                            </div>
-                            <div class="events-carousel-title">
+                    <div class="home-body-all-events-carousel-main">
+                            <div class="home-body-all-events-carousel-main-img" >
+                            <?php the_post_thumbnail()?>
+                            <!-- <div class="home-body-all-events-carousel-main-img-overlay"></div> -->
+                        </div>
+                            <div class="home-body-all-events-carousel-main-title">
                                 <h2><?php echo the_title()?></h2>
                             </div>
-                            <div class="events-carousel-excerpt">
-                                <p><?php echo the_excerpt()?></p>
+                            <div class="home-body-all-events-carousel-main-excerpt">
+                                <?php echo the_excerpt()?>
                             </div>
-                            <div class="events-carousel-date">
+                            <div class="home-body-all-events-carousel-main-date">
                                 <p>Happening <?php echo date('d M',$date_start).' - ' .date('d M', $date_end) ?></p>
                             </div>
-                            <div class="events-carousel-overlay"></div>
+                            
                     </div>
                 <?php
                 echo "</div>";

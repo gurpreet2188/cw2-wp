@@ -38,18 +38,16 @@
                 <h2>Or simply search.</h2>
             </div>
             <div class="shops-search-manual-input">
-                <input type="text" placeholder="For e.g; food">
+            <form name ="cw2-search-shop" class="shops-search-manual-input-form" action="cw2_search" id="cw2-search-shop" action="" method="post">
+                <input name="cw2-search-shop-value" type="text" placeholder="For e.g; food">
+                <button name="cw2-search-shop-submit" type="submit" id="cw2-search-shop-submit"><i class="fa fa-solid fa-magnifying-glass"></i></button>
+            </form>
             </div>
         </div>
     </div>
     <div class="shops-list">
         <div class="shops-list-container">
-            <div class="shops-list-container-title">
-                <h2>All Shops</h2>
-            </div>
-            <div class="shops-list-container-cards">
-                    <?php cw2_shop_cards(-1) ?>
-            </div>
+        <?php cw2_shop_cards(NULL, 'All Shops', 6) ?>
 
             <div class="shops-list-container-cards-more">
                 <button>Load More</button>
@@ -57,10 +55,6 @@
 
         </div>
     </div>
-
-    <!-- <?php 
-    cw2_search('a');
-    ?> -->
     
 </div>
 
