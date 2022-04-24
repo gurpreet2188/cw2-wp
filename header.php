@@ -80,7 +80,7 @@
                 <?php 
                     wp_nav_menu(
                         array(
-                            'menu' => 'primary',
+                            'menu' => 'pri-menu',
                             'container' => '',
                             'theme_location' => 'primary',
                             'items_wrap' => '<ul id="" class="home-header-nav-container-menu">%3$s</ul> '
@@ -88,6 +88,20 @@
                     );
                 ?>
             </div>
+
+            <div class="home-header-nav-container-mobile">
+               
+               <?php 
+                   wp_nav_menu(
+                       array(
+                           'menu' => 'sec-menu',
+                           'container' => '',
+                           'theme_location' => 'primary',
+                           'items_wrap' => '<ul id="" class="home-header-nav-container-menu">%3$s</ul> '
+                       )
+                   );
+               ?>
+           </div>
                 
             <div class="home-header-top-themeswitch-mobile">
                     <!-- <a href=""><span><i class="fa fa-sun"></i></span> <p class="home-header-top-themeswitch-company">FrX</p></a> -->

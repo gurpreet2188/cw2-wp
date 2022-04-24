@@ -1,0 +1,111 @@
+.latest {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+
+    &-crumb {
+        display: flex;
+        flex-direction: row;
+        gap: 1rem;
+        width: fit-content;
+        justify-self: flex-start;
+        align-self: flex-start;
+        // background-color: rgba(var(--cw2-fontNormal), 0.4);
+        margin-top: 0;
+
+        @include respond-to(mobile) {
+            display: none;
+        }
+
+        & > a {
+            // background-color: none;
+            text-decoration: none;
+            color: var(--cw2-colorPrimary);
+        }
+
+        & > p {
+            text-decoration: none;
+            
+        }
+    }
+    
+
+    &-cards {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 2rem;
+        width: 100%;
+        margin-top:4rem;
+
+        @include respond-to(mobile) {
+          margin-top: 2rem;
+        }
+
+
+        &-announcement {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            gap: 2rem;
+
+            &-title {
+                justify-self: flex-start;
+                align-self: flex-start;
+               
+                width: 100%;
+                border-bottom: 1px solid rgba(var(--cw2-fontNormal), $alpha: 0.5);
+                @include respond-to(mobile) {
+                    justify-self: center;
+                    align-self: center;
+                    
+                }
+                & > h2 {
+                    text-align: left;
+                    font-size: $font-size-big;
+
+                    @include respond-to(mobile) {
+                        text-align: center;
+                    }
+
+                }
+            }
+
+        }
+
+        &-blog{
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+
+            &-title {
+                justify-self: flex-start;
+                align-self: flex-start;
+               
+                width: 100%;
+                border-bottom: 1px solid rgba(var(--cw2-fontNormal), $alpha: 0.5);
+                @include respond-to(mobile) {
+                    justify-self: center;
+                    align-self: center;
+                    
+                }
+                & > h2 {
+                    text-align: left;
+                    font-size: $font-size-big;
+
+                    @include respond-to(mobile) {
+                        text-align: center;
+                    }
+
+                }
+            }
+            
+        }
+    }
+}

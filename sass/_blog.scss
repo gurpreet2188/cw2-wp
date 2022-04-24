@@ -1,10 +1,4 @@
-.events {
-    width: 70%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: auto;
+.blog {
 
     &-crumb {
         display: flex;
@@ -16,30 +10,24 @@
         // background-color: rgba(var(--cw2-fontNormal), 0.4);
         margin-top: 0;
 
-        @include respond-to(mobile) {
-            display: none;
+        & a:nth-last-of-type(2) {
+            background-color: rgba(var(--cw2-fontNormal), 0.4);
         }
 
-        & > a {
-            // background-color: none;
-            text-decoration: none;
-            color: var(--cw2-colorPrimary);
-        }
-
-        & > p {
+        & a {
             text-decoration: none;
             
         }
     }
+
     &-cards {
         display: flex;
         flex-direction: row;
-        justify-content: center;
-        align-items: center;
+        justify-content: flex-start;
+        align-items: flex-start;
         flex-wrap: wrap;
         gap: 2rem;
         width: 100%;
-        margin-top: 2rem;
 
         &-card {
             display: flex;

@@ -1,0 +1,186 @@
+.contact {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 3rem;
+    margin: auto;
+
+    @include respond-to(mobile) {
+        justify-content: center;
+        align-items: center;
+        margin-top: 3em;
+    }
+
+    &-title {
+        display: none;
+        // margin-top: 5rem;
+
+        @include respond-to(mobile) {
+            display: block;
+            text-align: center;
+            margin-top: 3rem;
+            color: var(--cw2-colorPrimary);
+            & > h1 {
+                text-align: center;
+                font-size: 1.5rem;
+            }
+        }
+    }
+    &-crumb {
+        display: flex;
+        flex-direction: row;
+        gap: 1rem;
+        width: fit-content;
+        justify-self: flex-start;
+        align-self: flex-start;
+        // background-color: rgba(var(--cw2-fontNormal), 0.4);
+        margin-top: 0;
+
+        @include respond-to(mobile) {
+            display: none;
+        }
+
+
+        & > a {
+            // background-color: none;
+            text-decoration: none;
+            color: var(--cw2-colorPrimary);
+        }
+
+        & > p {
+            
+            
+        }
+    }
+
+    &-main {
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 2rem;
+
+        @include respond-to(mobile) {
+            align-items: center;
+        }
+
+        &-title {
+            width: 40ch;
+
+            @include respond-to(mobile) {
+                width: 30ch;
+                font-size: large;
+            }
+
+        }
+
+        &-note {
+
+            & > p {
+                font-size: small;
+            }
+        }
+
+       & > form {
+           display: flex;
+           flex-direction: column;
+           gap: 2rem;
+
+       }
+
+        &-form {
+
+            &-name {
+                display: flex;
+                flex-direction: row;
+                gap: 1rem;
+
+                @include respond-to(mobile) {
+                   flex-direction: column;
+                }
+        
+
+                & > div {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 1rem;
+
+                    & > input {
+
+                        background-color: rgba(var(--cw2-fontNormal), 0.1);
+                        border: none;
+                        border-radius: 0.2rem;
+                        padding: 0.5rem;
+                        color: rgb(var(--cw2-fontNormal));
+                    }
+                }
+            }
+
+            &-contact {
+                display: flex;
+                flex-direction: row;
+                gap: 1rem;
+
+                @include respond-to(mobile) {
+                    flex-direction: column;
+                 }
+
+                & > div {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 1rem;
+
+                    & > input {
+
+                        background-color: rgba(var(--cw2-fontNormal), 0.1);
+                        border: none;
+                        border-radius: 0.2rem;
+                        padding: 0.5rem;
+                        color: rgb(var(--cw2-fontNormal));
+
+                        @include respond-to(mobile) {
+                        //    width: 80%;
+                        }
+                
+                    }
+                }
+            }
+
+            &-btn {
+                display: flex;
+                flex-direction: row;
+                gap: 1rem;
+                & > button {
+                    background-color: rgba(var(--cw2-fontNormal), 0.1);
+                    border: 1px solid rgba(var(--cw2-fontNormal), 0.3);
+                    border-radius: 0.2rem;
+                    padding: 0.5rem;
+                    color: rgb(var(--cw2-fontNormal));
+                }
+
+                @include respond-to(mobile) {
+                    gap: 2rem;
+                }
+            }
+
+            &-textarea {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+
+                & > textarea {
+                    background-color: rgba(var(--cw2-fontNormal), 0.1);
+                    border: 1px solid rgba(var(--cw2-fontNormal), 0.5);
+                    border-radius: 0.2rem;
+                    padding: 0.5rem;
+                    color: rgb(var(--cw2-fontNormal));
+
+                }
+            }
+        }
+
+    }
+}

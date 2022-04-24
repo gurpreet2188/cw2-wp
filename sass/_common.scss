@@ -39,3 +39,36 @@ p {
 .fa {
     margin: auto;
 }
+
+.fanew {
+        // font-family: "Font Awesome 5 Free";
+        // content: "\f078"; 
+        // font-weight: 900;
+        // color: rgb(var(--cw2-fontNormal));
+        // width: 1.6em;
+        // margin-left: 0.5rem; 
+}
+
+
+@include respond-to(mobile) {
+    // .home-header-nav-container-menu ul .nav-menu.toggled-on {
+    //     width: 100%;
+    //     text-align: left;
+    //   }
+    //   .menu-item-has-children a {
+    //     display: block !important;
+    //   }
+    // .menu-item-has-children {
+    //     position: relative;
+    //   }
+    //   .home-header-nav-container-menu li ul {
+    //     display: none;
+    //   }
+    //   .menu-item-has-children a {
+    //     display: block !important;
+    //   }
+
+    // .newNav > ul{
+    //     display: none;
+    // }
+  }

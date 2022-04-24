@@ -6,12 +6,15 @@
 <?php get_header()?>
 
 <div class="shops">
-
+    <div class="shops-title">
+        <h1>Shops</h1>
+    </div>
     <div class="shops-search">
         <div class="shops-search-category">
             <div class="shops-search-category-title">
                 <h2>Find Shops by category</h2>
             </div>
+            
             <div class="shops-search-category-container">
                 <button class="utensils">
                 <i class="fa fa-solid fa-utensils"></i>
@@ -39,8 +42,9 @@
             </div>
             <div class="shops-search-manual-input">
             <form name ="cw2-search-shop" class="shops-search-manual-input-form" action="cw2_search" id="cw2-search-shop" action="" method="post">
-                <input name="cw2-search-shop-value" type="text" placeholder="For e.g; food">
                 <button name="cw2-search-shop-submit" type="submit" id="cw2-search-shop-submit"><i class="fa fa-solid fa-magnifying-glass"></i></button>
+                <input name="cw2-search-shop-value" type="text" placeholder="For e.g; food">
+                <button name="cw2-search-shop-submit" type="submit" id="cw2-search-shop-submit"><i class="fa-solid fa-chevron-right"></i></button>
             </form>
             </div>
         </div>

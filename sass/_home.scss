@@ -364,13 +364,97 @@
                 justify-content: center;
                 align-items: center;
                 text-align: center;
+                // transition: all 0.15s ease-in-out;
                 & > ul {
                     margin: 0;
                 }
 
                 @include respond-to(mobile) {
-                    width: 100%;
+                    display: none;
                 }
+
+                &-mobile {
+                    display: none;
+
+                    @include respond-to(mobile) {
+                        display: flex;
+                    }
+
+
+                }
+
+                & > ul ul{
+                    display: none;
+                    position: absolute;
+                    list-style: none;
+                    background-color: var(--cw2-bg);
+                    z-index: 30;
+                    transition: all 0.15s ease-in-out;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    justify-content: flex-start;
+                    gap: 1rem;
+                    padding: 1rem;
+                    text-align: left;
+                    box-shadow: 5px 5px 10px rgba(0,0,0,0.2);
+
+                }
+
+                & ul > .menu-item-has-children{ 
+                    // width: 100%;
+                }
+
+                & ul > .menu-item-has-children::after{
+                    font-family: "Font Awesome 5 Free";
+                    content: "\f078"; 
+                    font-weight: 900;
+                    color: rgb(var(--cw2-fontNormal));
+                    width: 1.6em;
+                    margin-left: 0.5rem; 
+                    cursor: pointer;
+
+                   
+
+                }
+
+                // & ul > ul:nth-child(1)::after {
+                //     font-family: "Font Awesome 5 Free";
+                //     content: "\f078"; 
+                //     font-weight: 900;
+                //     color: rgb(var(--cw2-fontNormal));
+                //     width: 1.6em;
+                //     margin-left: 0.5rem; 
+                // }
+
+                // @media screen and (min-width: 1200px) {
+                //     & > ul li:hover > ul{
+                //         display: flex;
+                //     }
+                //   }
+
+                // @include respond-to(mobile) {
+                //     & >ul ul{
+                //         display: none;
+                //     }
+                // }
+
+                & > ul li:hover > ul{
+                    display: flex;
+
+                }
+
+                & > ul li > ul > li{
+                    text-align: left;
+
+                }
+
+                // @include respond-to(mobile) {
+                //     width: 100%;
+                //     & > ul ul{
+                //        visibility: hidden;
+                //     }
+                // }
+
                 &-menu{
                     justify-self: center;
                     align-self: center;
@@ -388,7 +472,7 @@
                         align-self: flex-start;
                         gap: 1rem;
                         padding: 0;
-                        margin-top: 3rem;
+                        margin-top: 0rem;
                         width: 100%;
                         &::after {
                             content: '';
@@ -407,6 +491,7 @@
     
                         &:hover{
                             transition: all 0.4s ease-in-out;
+                            color: var(--cw2-colorPrimary) !important;
                         }
                     }
     
@@ -687,8 +772,8 @@
                     
                     &-title {
                         position: absolute;
-                        bottom: 6rem;
-                        left: 2rem;
+                        bottom: 20%;
+                        left: 2%;
                         z-index: 20;
 
                         @include respond-to(mobile) {
@@ -711,9 +796,9 @@
                     &-excerpt {
                         z-index: 20;
                         position: absolute;
-                        width: 50%;
-                        bottom: 3rem;
-                        right: 2rem;
+                        width: 40%;
+                        bottom: 10%;
+                        right: 3%;
 
                         @include respond-to(mobile) {
                             position: relative;
@@ -742,8 +827,8 @@
                     &-date {
                         z-index: 20;
                         position: absolute;
-                        bottom: 2rem;
-                        right: 2rem;
+                        bottom: 17%;
+                        left: 2%;
 
                         @include respond-to(mobile) {
                             bottom: 7rem;
@@ -760,6 +845,46 @@
                                
                             }
                             
+                        }
+                    }
+
+                    &-more {
+                        z-index: 20;
+                        position: absolute;
+                        bottom: 1.5%;
+                        right: 31%;
+                        display: flex;
+                        flex-direction: row;
+                        gap: 1rem;
+                        justify-content: flex-end;
+                        align-items: flex-end;
+
+                        @include respond-to(mobile) {
+                            justify-self: flex-end;
+                            align-self: flex-end;
+                            position: relative;
+                            // bottom: 7rem;
+                            right: 1rem;
+                            // top: auto;
+                            width: 100%;
+                        }
+
+                        & > p {
+                            color: #fff;
+                            font-size: medium;
+                            @include respond-to(mobile) {
+                                color: rgb(var(--cw2-fontNormal));
+                                font-size: smaller;
+                                text-align: right;
+                            }
+                            
+                        }
+
+                        & > i {
+                            @include respond-to(mobile) {
+                                margin: 0;
+                                margin: auto;
+                            }
                         }
                     }
                     &-img {

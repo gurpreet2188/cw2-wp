@@ -14,6 +14,7 @@ function cw2_add_scripts(){
   wp_enqueue_script("cw2-jquery", "https://code.jquery.com/jquery-3.6.0.min.js", array(), '3.6.0', true);
   wp_enqueue_script("cw2-popper", "https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js", array(), '2.10.2', true);
   wp_enqueue_script("cw2-bootstrap", "https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js", array(), '5.1.3', true);
+//   wp_enqueue_script("cw2-maps", "http://maps.googleapis.com/maps/api/js?sensor=true", array(),  '' , true);
   
   //   wp_enqueue_script("cw2-bootstrap", "https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js", array(), '4.4.1', true);
   wp_enqueue_script('cw2-js', get_template_directory_uri() . "/assests/js/main.js", array(), $version, true);
@@ -96,7 +97,7 @@ function cw2_add_scripts(){
         'not_found_in_trash' => 'No Shops found in Trash',
         'parent_item_colon' => '',
         'menu_name' => 'Shops',
-        'register_meta_box_cb' => 'cw2_shop_metabox'
+        'register_meta_box_cb' => 'cw2_shop_meta_box'
         );
         //register post type
         register_post_type ( 'shop', array(
@@ -113,6 +114,42 @@ function cw2_add_scripts(){
         }
     
     add_action( 'init', 'cw2_shops_post' );
+
+    function cw2_faq_post() {
+        // set up labels
+        $labels = array (
+        'name' => 'faqs',
+        'singular_name' => 'FAQ',
+        'add_new' => 'Add New FAQ',
+        'add_new_item' => 'Add New FAQ',
+        'edit_item' => 'Edit FAQ Details',
+        'featured_image' => 'Set FAQ Image (If Any)',
+        'set_featured_image' => 'Set Image',
+        'new_item' => 'New FAQ',
+        'all_items' => 'All FAQs',
+        'view_item' => 'View FAQ Info',
+        'search_items' => 'Search FAQs',
+        'not_found' => 'No FAQ Found',
+        'not_found_in_trash' => 'No FAQs found in Trash',
+        'parent_item_colon' => '',
+        'menu_name' => 'F.A.Qs',
+        'register_meta_box_cb' => 'cw2_faq_metabox'
+        );
+        //register post type
+        register_post_type ( 'faq', array(
+        'labels' => $labels,
+        'has_archive' => true,
+        'public' => true,
+        'supports' => array( 'title', 'thumbnail','page-attributes' ),
+        'taxonomies' => array( 'post_tag', 'category' ),
+        'exclude_from_search' => false,
+        'capability_type' => 'post',
+        'rewrite' => array( 'slug' => 'help' ),
+        )
+        );
+        }
+    
+    add_action( 'init', 'cw2_faq_post' );
 
     function cw2_announcement_post() {
         // set up labels
@@ -148,6 +185,41 @@ function cw2_add_scripts(){
         }
     
     add_action( 'init', 'cw2_announcement_post' );
+
+    function cw2_blog_post() {
+        // set up labels
+        $labels = array (
+        'name' => 'Blog Posts',
+        'singular_name' => 'blog',
+        'add_new' => 'Add new Blog post',
+        'add_new_item' => 'Add New blog',
+        'edit_item' => 'Edit blog Details',
+        'set_featured_image' => 'Set blog Logo',
+        'new_item' => 'New blog Post',
+        'all_items' => 'All blog posts',
+        'view_item' => 'View blog post Info',
+        'search_items' => 'Search blog posts',
+        'not_found' => 'No Blog posts found',
+        'not_found_in_trash' => 'No blog posts found in Trash',
+        'parent_item_colon' => '',
+        'menu_name' => 'Blog Posts',
+        // 'register_meta_box_cb' => 'cw2_shop_metabox'
+        );
+        //register post type
+        register_post_type ( 'blog', array(
+        'labels' => $labels,
+        'has_archive' => true,
+        'public' => true,
+        'supports' => array( 'title', 'editor','excerpt', 'thumbnail','page-attributes' ),
+        'taxonomies' => array( 'post_tag', 'category' ),
+        'exclude_from_search' => false,
+        'capability_type' => 'post',
+        'rewrite' => array( 'slug' => 'blog' ),
+        )
+        );
+        }
+    
+    add_action( 'init', 'cw2_blog_post' );
     
     
 
@@ -304,6 +376,44 @@ function cw2_custom_post_load_more() {
        wp_reset_postdata();
    }
 
+// faq metabox
+
+    function cw2_faq_meta_box () {
+        add_meta_box( 'cw2_faq_q', 'Question', 'cw2_faq_q_meta_html');
+        add_meta_box( 'cw2_faq_a', 'Answer', 'cw2_faq_a_meta_html');
+    }
+
+    add_action( 'add_meta_boxes_faq', 'cw2_faq_meta_box');
+
+    function cw2_faq_q_meta_html($post) {
+        $value  = get_post_meta( $post->ID, '_cw2_faq_q', true );
+        ?>          
+            <div>
+                <input type="text" name="cw2_faq_q" value="<?php echo esc_attr( $value )?>" size="25"/>
+            </div>
+        <?php
+    }
+    function cw2_faq_a_meta_html($post) {
+        $value  = get_post_meta( $post->ID, '_cw2_faq_a', true );
+        ?>          
+            <div>
+                <input type="text" name="cw2_faq_a" value="<?php echo esc_attr( $value )?>" size="25"/>
+            </div>
+        <?php
+    }
+
+   function cw2_faq_save($post_id) {
+    $keys = array('_cw2_faq_q','_cw2_faq_a');
+    $name = array('cw2_faq_q','cw2_faq_a');
+        foreach($name as $i=>$v) {
+            if(array_key_exists($v, $_POST)) {
+                update_post_meta( $post_id, $keys[$i], $_POST[$v]);
+            }
+        }
+    }
+
+    add_action('save_post_faq', 'cw2_faq_save');
+
 // add custom meta box for event calendar
 // NOTE: this lacks normal security to add/save/update the post in cw2_event_date_save function.
    function cw2_event_date_meta_box () {
@@ -341,14 +451,14 @@ function cw2_custom_post_load_more() {
 
    add_action('save_post_event', 'cw2_event_date_save');
 
-   function cw2_get_event_date ($content) {
-       global $post;
-       $value = esc_attr( get_post_meta( $post->ID, '_cw2_event', true ) );
-       $date = "<div class=''>$value</div>";
-       return $date.$content;
-   }
+//    function cw2_get_event_date ($content) {
+//        global $post;
+//        $value = esc_attr( get_post_meta( $post->ID, '_cw2_event', true ) );
+//        $date = "<div class=''>$value</div>";
+//        return $date.$content;
+//    }
 
-   add_filter('the_content', 'cw2_get_event_date');
+//    add_filter('the_content', 'cw2_get_event_date');
 
 
 
@@ -464,23 +574,23 @@ function cw2_shop_cards ($query, $title, $limit) {
                         </div>
                         <div class="shops-list-container-cards-card-content-loc">
                         <i class="fa fa-solid fa-location-dot"></i>
-                        <?php echo get_post_meta( get_the_ID(), '_cw2_shop_find', true );?>
+                        <p><?php echo get_post_meta( get_the_ID(), '_cw2_shop_find', true );?></p>
                         </div>
         
                         <div class="shops-list-container-cards-card-content-call">
                         <i class="fa-solid fa-phone"></i>
-                        <?php echo get_post_meta( get_the_ID(), '_cw2_shop_contact', true ); ?>
+                        <p><?php echo get_post_meta( get_the_ID(), '_cw2_shop_contact', true ); ?></p>
                         </div>
         
                         <div class="shops-list-container-cards-card-content-hours">
                         <i class="fa-solid fa-clock"></i>
-                        <?php  echo get_post_meta( get_the_ID(), '_cw2_shop_open', true ); ?>
+                        <p><?php  echo get_post_meta( get_the_ID(), '_cw2_shop_open', true ); ?>
                         -
-                        <?php echo get_post_meta( get_the_ID(), '_cw2_shop_close', true );?>
+                        <?php echo get_post_meta( get_the_ID(), '_cw2_shop_close', true );?></p>
                         </div>
-                        <div class="shops-list-container-cards-card-content-cat">
+                        <!-- <div class="shops-list-container-cards-card-content-cat">
                         <?php get_the_category()?>
-                        </div>
+                        </div> -->
                     </div>
         </div>
     <?php
@@ -702,7 +812,7 @@ function cw2_shop_common_posts ($name, $limit, $category) {
                 <div class="home-body-all-container-posts-post-content-title">
                     <h2><?php echo $category === 'promo' ? get_post_meta( get_the_ID(), '_cw2_shop_promo', true ): the_title() ?></h2>
                 </div>
-                <div class="home-body-all-container-posts-post-content-date">
+                <div class="home-body-all-container-posts-post-content-date" style="display:<?php echo $name == 'Shops' ? 'none;' : '' ?>">
                         <p><?php echo get_the_date('d-m-y')?></p>
                 </div>
             </div>
@@ -747,6 +857,10 @@ function cw2_events_carousel() {
                             <div class="home-body-all-events-carousel-main-date">
                                 <p>Happening <?php echo date('d M',$date_start).' - ' .date('d M', $date_end) ?></p>
                             </div>
+                            <div class="home-body-all-events-carousel-main-more">
+                            
+                                <p>Continue Reading <i class="fa fa-solid fa-chevron-right"></i></p>
+                            </div>
                             
                     </div>
                 <?php
@@ -760,6 +874,130 @@ function cw2_events_carousel() {
     }
    wp_reset_postdata();
 }
+
+
+function cw2_events_cards ($limit) {
+    $wp_query = new WP_Query(array('post_type'=>'event', 'post_status'=>'publish', 'posts_per_page'=>$limit));
+
+    if ($wp_query->have_posts()) { 
+        while ( $wp_query->have_posts() ) : $wp_query->the_post();
+        ?> 
+        <a href="<?php echo get_the_permalink() ?>">
+         <div class="events-cards-card">
+            <div class="events-cards-card-img">
+            <?php the_post_thumbnail()?>
+            </div>
+            <div class="events-cards-card-content">
+                <div class="events-cards-card-content-title">
+                <h2><?php echo the_title()?></h2>
+                </div>
+                <div class="events-cards-card-content-date">
+                <p>Happening <?php echo date('d M',$date_start).' - ' .date('d M', $date_end) ?></p>
+                </div>
+            </div>
+        </div>
+        </a>     
+        <?php
+        endwhile;
+
+    wp_reset_postdata();
+
+    }
+}
+
+function cw2_announcement_cards ($limit) {
+    $wp_query = new WP_Query(array('post_type'=>'announcement', 'post_status'=>'publish', 'posts_per_page'=>$limit));
+
+    if ($wp_query->have_posts()) { 
+        ?>
+        <div class="announcement-cards">
+
+        <?php
+        while ( $wp_query->have_posts() ) : $wp_query->the_post();
+        ?>      
+         <div class="announcement-cards-card">
+            <div class="announcement-cards-card-img">
+            <?php the_post_thumbnail()?>
+            </div>
+            <div class="announcement-cards-card-content">
+                <div class="announcement-cards-card-content-title">
+                <h2><?php echo the_title()?></h2>
+                </div>
+                <div class="announcement-cards-card-content-date">
+                <p>Happening <?php echo get_the_date() ?></p>
+                </div>
+            </div>
+        </div>
+        <?php
+
+        endwhile;
+
+        ?>
+        </div>
+        <?php
+
+    wp_reset_postdata();
+
+    }
+}
+
+function cw2_blog_cards ($limit) {
+    $wp_query = new WP_Query(array('post_type'=>'blog', 'post_status'=>'publish', 'posts_per_page'=>$limit));
+
+    if ($wp_query->have_posts()) { 
+        ?>
+        <div class="blog-cards">
+
+        <?php
+       
+        while ( $wp_query->have_posts() ) : $wp_query->the_post();
+        ?>      
+         <div class="blog-cards-card">
+            <div class="blog-cards-card-img">
+            <?php the_post_thumbnail()?>
+            </div>
+            <div class="blog-cards-card-content">
+                <div class="blog-cards-card-content-title">
+                <h2><?php echo the_title()?></h2>
+                </div>
+                <div class="blog-cards-card-content-date">
+                <p>Happening <?php echo get_the_date() ?></p>
+                </div>
+            </div>
+        </div>
+
+        <?php
+        endwhile;
+
+        ?>
+        </div>
+        <?php
+    wp_reset_postdata();
+
+    }
+}
+
+function cw2_faq_cards ($limit) {
+    $wp_query = new WP_Query(array('post_type'=>'faq', 'post_status'=>'publish', 'posts_per_page'=>$limit));
+
+    if ($wp_query->have_posts()) { 
+      
+        while ( $wp_query->have_posts() ) : $wp_query->the_post();
+        ?>      
+            <div class="help-faq-cards-card">
+                    <h2>Q. <?php echo get_post_meta( get_the_ID(), '_cw2_faq_q', true )?></h2>
+                    <?php the_post_thumbnail() ? the_post_thumbnail() : NULL ?>
+                    <p>A. <?php echo get_post_meta( get_the_ID(), '_cw2_faq_a', true )?></p>
+            </div>
+         
+        <?php
+        endwhile;
+
+    wp_reset_postdata();
+
+    }
+}
+
 
 
 
