@@ -41,7 +41,7 @@
                 <h2>Or simply search.</h2>
             </div>
             <div class="shops-search-manual-input">
-            <form name ="cw2-search-shop" class="shops-search-manual-input-form" action="cw2_search" id="cw2-search-shop" action="" method="post">
+            <form name ="cw2-search-shop" class="shops-search-manual-input-form" id="cw2-search-shop" action="" method="post">
                 <button name="cw2-search-shop-submit" type="submit" id="cw2-search-shop-submit"><i class="fa fa-solid fa-magnifying-glass"></i></button>
                 <input name="cw2-search-shop-value" type="text" placeholder="For e.g; food">
                 <button name="cw2-search-shop-submit" type="submit" id="cw2-search-shop-submit"><i class="fa-solid fa-chevron-right"></i></button>

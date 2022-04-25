@@ -6,6 +6,9 @@
 <?php get_header()?>
 
 <div class="latest">
+    <div class="latest-title">
+        <h2>What's New</h2>
+    </div>
     <div class="latest-crumb">
         <a href="<?php echo site_url()?>">Home</a>
         <p> <i class="fa-solid fa-chevron-right"></i> </p>
@@ -14,15 +17,15 @@
     <div class="latest-cards">
         <div class="latest-cards-announcement">
             <div class="latest-cards-announcement-title">
-                <h2>Announcements</h2>
+                <a href="<?php echo site_url('/home/latest/announcement')?>" >Announcements <i class="fa fa-solid fa-chevron-right"></i></a>
             </div>
             <?php cw2_announcement_cards(4)?>
         </div>
         <div class="latest-cards-blog">
             <div class="latest-cards-blog-title">
-                <h2>Blog Posts</h2>
+                <a href="<?php echo site_url('/home/latest/blog')?>">Blog Posts <i class="fa fa-solid fa-chevron-right"></i></a>
             </div>
-            <?php cw2_blog_cards(4)?>
+            <?php cw2_blog_cards(1)?>
     </div>
     </div>
 </div>

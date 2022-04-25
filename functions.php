@@ -22,6 +22,7 @@ function cw2_add_scripts(){
   wp_register_script('custom-script', get_template_directory_uri() . "/assests/js/loadmore.js", array('jquery'), false, true);
   wp_register_script('cw2_filter', get_template_directory_uri() . "/assests/js/filter.js", array('jquery'), NULL, true);
   wp_register_script('cw2_search', get_template_directory_uri() . "/assests/js/search.js", array('jquery'), NULL, true);
+  wp_register_script('cw2_main_search', get_template_directory_uri() . "/assests/js/main_search.js", array('jquery'), NULL, true);
   $script_data_array = array(
       'ajaxurl' => admin_url('admin-ajax.php'),
       'security' => wp_create_nonce( 'load_more_posts' ),
@@ -34,8 +35,10 @@ function cw2_add_scripts(){
     wp_localize_script( 'custom-script', 'blog', $script_data_array );
     wp_localize_script( 'cw2_filter', 'wpAjax', $script_data_array);
     wp_localize_script( 'cw2_search', 'wpAjax', $script_data_array);
+    wp_localize_script( 'cw2_main_search', 'wpAjax', $script_data_array);
     wp_enqueue_script( 'cw2_filter' );
     wp_enqueue_script( 'cw2_search' );
+    wp_enqueue_script( 'cw2_main_search' );
     wp_enqueue_script( 'custom-script' );
 }
     add_action('wp_enqueue_scripts', 'cw2_add_scripts');
@@ -602,16 +605,16 @@ function cw2_shop_cards ($query, $title, $limit) {
 
 //search  all
 
-// function mySearchFilter( $query ) {
-//     $post_type = $_GET['post_type'];
-//     if (!$post_type) {
-//        $post_type = 'any';
-//     }
-//     if ( $query->is_search ) {
-//        $query->set( 'post_type', array( esc_attr( $post_type ) ) );
-//     }
-//     return $query;
-// }
+function mySearchFilter( $query ) {
+    $post_type = $_GET['post_type'];
+    if (!$post_type) {
+       $post_type = 'any';
+    }
+    if ( $query->is_search ) {
+       $query->set( 'post_type', array( esc_attr( $post_type ) ) );
+    }
+    return $query;
+}
 // add_filter( 'pre_get_posts', 'mySearchFilter' );
 
 
@@ -716,6 +719,48 @@ add_action( 'init', 'news_my_taxonomy');
 
         return $query;
     }
+
+    function cw2_main_search () {
+        // var_dump($_POST);
+    //   add_filter( 'pre_get_posts', 'mySearchFilter' );
+        $search = $_POST['s'];
+        // var_dump($search);
+        // if($search) {
+            $wp_query = new WP_Query( array(
+                'post_type' => 'any',
+                'post_status'=>'publish',
+                'posts_per_page' => 6,
+                // 'order' => 'ASC',
+                's' => $search,
+            ));
+        // }
+        // remove_filter( 'pre_get_posts', 'mySearchFilter' );
+        // var_dump($wp_query->have_posts());
+        if($wp_query->have_posts()){
+            while ( $wp_query->have_posts() ) : $wp_query->the_post();
+            ?>
+                <div class="search-posts-post">
+                    <div class="search-posts-post-img">
+                        <?php the_post_thumbnail()?>
+                    </div>
+                    <div class="search-posts-post-content">
+                        <div class="search-posts-post-content-title">
+                            <?php echo get_the_title()?>
+                        </div>
+
+                    </div>
+                </div>
+
+            <?php
+        endwhile;
+        }
+        wp_die();
+        
+    
+    }
+
+    add_action('wp_ajax_nopriv_cw2_main_search', 'cw2_main_search');
+    add_action('wp_ajax_cw2_main_search', 'cw2_main_search');
    
 
     
@@ -758,6 +803,12 @@ add_action( 'init', 'news_my_taxonomy');
         
         if($wp_query->have_posts()){
             cw2_shop_cards($wp_query, $search ? 'Search Results for: '.$search : 'All Shops', 6);
+        } else {
+            ?>
+            <div class="err">
+                <p>Sorry we could not find anything related to: <?php echo $search?>. Try seraching again or use one of the category filters.</p>
+            </div>
+        <?php
         }
         wp_die();
         
@@ -766,8 +817,6 @@ add_action( 'init', 'news_my_taxonomy');
 
     add_action('wp_ajax_nopriv_cw2_shop_search', 'cw2_shop_search');
     add_action('wp_ajax_cw2_shop_search', 'cw2_shop_search');
-
-
 // announcement
 function cw2_announcement($limit) {
     $wp_query = new WP_Query(array(
@@ -803,6 +852,7 @@ function cw2_shop_common_posts ($name, $limit, $category) {
         echo '<div class="home-body-all-container-posts">';
         while ( $wp_query->have_posts() ) : $wp_query->the_post();
         ?>
+        <a href="<?php echo get_the_permalink()?>">
         <div class="home-body-all-container-posts-post">
             
             <div class="home-body-all-container-posts-post-img">
@@ -817,15 +867,56 @@ function cw2_shop_common_posts ($name, $limit, $category) {
                 </div>
             </div>
         </div>
+        </a>
        <?php
         endwhile; 
     
     ?>
         <div class="home-body-all-container-posts-more">
-            <button>More <?php echo $name?> <i class="fa fa-solid fa-chevron-right"></i></button>
+            <a href="<?php echo site_url('/home'.'/'.$name) ?>">More <?php echo $name?> <i class="fa fa-solid fa-chevron-right"></i></a>
         </div>
         </div>
       </div>
+    <?php
+    wp_reset_postdata();
+}
+
+function cw2_deal_page_posts ($name, $limit, $category) {
+    // var_dump($name, $limit, $category);
+    $wp_query = new WP_Query(array('post_type'=>'shop', 'post_status'=>'publish', 'posts_per_page'=>$limit));
+
+    if($category) {
+        $wp_query = new WP_Query(array(
+            'post_type' =>  'shop',
+            'post_status' => 'publish',
+            'posts_per_page' => $limit,
+            'category_name' => $category
+        ));
+    }
+      
+       
+        while ( $wp_query->have_posts() ) : $wp_query->the_post();
+        ?>
+        <a href="<?php echo get_the_permalink()?>">
+        <div class="deal-cards-card">
+            
+            <div class="deal-cards-card-img">
+                <?php the_post_thumbnail() ?>
+            </div>
+            <div class="deal-cards-card-content">
+                <div class="deal-cards-card-content-title">
+                    <h2><?php echo $category === 'promo' ? get_post_meta( get_the_ID(), '_cw2_shop_promo', true ): the_title() ?></h2>
+                </div>
+                <div class="deal-cards-card-content-date" style="display:<?php echo $name == 'Shops' ? 'none;' : '' ?>">
+                        <p><?php echo get_the_date('d-m-y')?></p>
+                </div>
+            </div>
+        </div>
+        </a>
+       <?php
+        endwhile; 
+    
+    ?>
     <?php
     wp_reset_postdata();
 }
@@ -855,7 +946,7 @@ function cw2_events_carousel() {
                                 <?php echo the_excerpt()?>
                             </div>
                             <div class="home-body-all-events-carousel-main-date">
-                                <p>Happening <?php echo date('d M',$date_start).' - ' .date('d M', $date_end) ?></p>
+                                <p><i class="fa-solid fa-calendar-day"></i></i> <?php echo date('d M',$date_start).' - ' .date('d M', $date_end) ?></p>
                             </div>
                             <div class="home-body-all-events-carousel-main-more">
                             
@@ -892,7 +983,7 @@ function cw2_events_cards ($limit) {
                 <h2><?php echo the_title()?></h2>
                 </div>
                 <div class="events-cards-card-content-date">
-                <p>Happening <?php echo date('d M',$date_start).' - ' .date('d M', $date_end) ?></p>
+                <p><i class="fa-solid fa-calendar-day"></i></i> <?php echo date('d M',$date_start).' - ' .date('d M', $date_end) ?></p>
                 </div>
             </div>
         </div>
@@ -911,10 +1002,10 @@ function cw2_announcement_cards ($limit) {
     if ($wp_query->have_posts()) { 
         ?>
         <div class="announcement-cards">
-
         <?php
         while ( $wp_query->have_posts() ) : $wp_query->the_post();
-        ?>      
+        ?>
+        <a href="<?php echo get_the_permalink()?>">     
          <div class="announcement-cards-card">
             <div class="announcement-cards-card-img">
             <?php the_post_thumbnail()?>
@@ -924,10 +1015,11 @@ function cw2_announcement_cards ($limit) {
                 <h2><?php echo the_title()?></h2>
                 </div>
                 <div class="announcement-cards-card-content-date">
-                <p>Happening <?php echo get_the_date() ?></p>
+                <p><?php echo get_the_date() ?></p>
                 </div>
             </div>
         </div>
+        </a> 
         <?php
 
         endwhile;
@@ -952,6 +1044,7 @@ function cw2_blog_cards ($limit) {
        
         while ( $wp_query->have_posts() ) : $wp_query->the_post();
         ?>      
+         <a href="<?php echo get_the_permalink()?>">   
          <div class="blog-cards-card">
             <div class="blog-cards-card-img">
             <?php the_post_thumbnail()?>
@@ -961,11 +1054,11 @@ function cw2_blog_cards ($limit) {
                 <h2><?php echo the_title()?></h2>
                 </div>
                 <div class="blog-cards-card-content-date">
-                <p>Happening <?php echo get_the_date() ?></p>
+                <p><?php echo get_the_date() ?></p>
                 </div>
             </div>
         </div>
-
+        </a> 
         <?php
         endwhile;
 

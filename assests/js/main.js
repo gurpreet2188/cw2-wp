@@ -25,20 +25,70 @@ $(document).ready(function () {
 
 document.addEventListener('DOMContentLoaded', function(e){
 
+
+	if(document.querySelectorAll('.home-bktop-btn')[0]) {
+		document.querySelectorAll('.home-bktop-btn')[0].addEventListener('click', function (){
+			window.scrollTo(0, 0);
+		})
+
+	}
+
+	s = localStorage.getItem('search')
+	if(s) {
+		if(document.querySelectorAll('.search-posts')[0]) {
+			document.querySelectorAll('.search-posts')[0].innerHTML = s;
+
+		}
+	}
+
+
+	const navBtn = document.querySelectorAll('.home-header-top-btnNav')[0];
+	const windowWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+	if(windowWidth < 500) {
+		if(window.location.pathname !== '/') {
+			document.querySelectorAll('.home-header-top-back')[0].style.display = 'block'
+		}
+	}
+	const mHeader = document.querySelectorAll('.home-header-top-brand-mobile')[0]
+
+	const mainSearhMClose = document.querySelectorAll('.mobile-search-form-close')[0]
+	const mainSearch = document.querySelectorAll('.mobile-main-search')[0]
+	const mobileSearchForm = document.querySelectorAll('.home-header-nav-container-mobile-search-form')[0]
+
+	let msf = false
+	mainSearch.addEventListener('click', function () {
+		if(!msf) {
+			mobileSearchForm.style.transform = "translate(-5%, -70%)"
+			mHeader.style.transform = "translateY(-500%)"
+			navBtn.style.transform = "translateY(-500%)"
+			msf = true
+		} 
+	})
+
+	mainSearhMClose.addEventListener('click', function () {
+		mobileSearchForm.style.transform = "translate(200%, -70%)"
+			mHeader.style.transform = "translateY(0%)"
+			navBtn.style.transform = "translateY(0%)"
+			msf = false
+	})
+	
+
 	// window.scrollTo(0, 0);
 	// const typeBtn = document.querySelectorAll('.types')[0];
 	// const nameBtn = document.querySelectorAll('.names')[0];
 	//navmen 
 	// const navDropDown = document.querySelector('.menu-item-has-children');
 	// const navDrop = document.querySelectorAll('.newNav')[0]
-	const navBtn = document.querySelectorAll('.home-header-top-btnNav')[0];
+	
 	const navMenu = document.querySelectorAll('.home-header-nav')[0];
 	let menu = true;
 	navBtn.addEventListener('click', function () {
 		if(menu) {
+			navBtn.classList.add('open');
 			navMenu.style.transform = "translateX(0%)";
 		} else {
 			navMenu.style.transform = "translateX(100%)";
+			navBtn.classList.remove('open');
 		}
 		menu = !menu;
 	})

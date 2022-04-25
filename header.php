@@ -30,13 +30,22 @@
         </div>
    
     <header class="home-header">
+    
         <div class="home-header-top">
-        <a class="home-header-top-brand-mobile" href="#">
+        <div class="home-header-top-back">
+            <button onclick="history.back()"><i class="fa fa-solid fa-chevron-left"></i></button>
+        </div>
+
+      
+
+        <a class="home-header-top-brand-mobile" href="<?php echo site_url()?>">
                <?php logoSvg()?>
                 </a>
                 <div class="home-header-top-empty">
                     
                 </div>
+
+                
        
                 <div class="home-header-top-info">
                     <div>
@@ -54,12 +63,11 @@
                     <button class="home-header-top-themeswitch"><span class="home-header-top-themeswitch-circle"><i class="fa fa-sun fa-theme"></i></span></button>
                 </div>
                 
-
                 <button class="home-header-top-btnNav">
                     <span class="home-header-top-btnNav-l1"></span>
                     <span class="home-header-top-btnNav-l2"></span>
                     <span class="home-header-top-btnNav-l3"></span>
-            </button>
+                </button>
 
         </div>
            
@@ -71,7 +79,7 @@
                         // $logo = wp_get_attachment_image_src($custom_logo_id);
                     }
                 ?>	    
-                <a class="home-header-nav-brand-desktop" href="#">
+                <a class="home-header-nav-brand-desktop" href="<?php echo site_url()?>">
                <?php logoSvg()?>
                 </a>
                 
@@ -90,6 +98,19 @@
             </div>
 
             <div class="home-header-nav-container-mobile">
+                
+                <div class="home-header-nav-container-mobile-search">
+                    <p class="mobile-main-search"><i class="fa-solid fa-magnifying-glass"></i></p>
+                    
+                    <div class="home-header-nav-container-mobile-search-form">
+                        <button class="mobile-search-form-close" ><i class="fa-solid fa-arrow-left"></i></button>
+                        <form name="cw2-main-search" id="cw2-main-search" method="post">
+                        <input type="text" name="cw2-main-search-value">
+                            <button type="submit" class="" ><i class="fa-solid fa-chevron-right"></i></button>
+                            
+                        </form>
+                    </div>
+                </div>
                
                <?php 
                    wp_nav_menu(
@@ -110,6 +131,26 @@
                     <p class="home-header-top-themeswitch-text">Dark Mode</p>
                     <button class="home-header-top-themeswitch"><span class="home-header-top-themeswitch-circle"><i class="fa fa-sun fa-theme"></i></span></button>
                 </div>
+                
+                <div class="home-header-top-info-mobile">
+                    <div>
+                    <i class="fa fa-thin fa-clock "></i> <p>10:00 am- 10:00pm</p>
+                    </div>
+                    <div>
+                    <i class="fa fa-thin fa-phone"></i> <p>(65) 6894 2237</p>
+                    </div>
+                </div>
+
+            <button class="home-header-nav-search">
+                <p><i class="fa-solid fa-magnifying-glass"></i></p>
+                
+                <div class="home-header-nav-search-form">
+                   <form name="cw2-main-search" id="cw2-main-search" method="post">
+                       <input type="text" name="cw2-main-search-value">
+                       <i type="submit" name="cw2-main-search-submit" id="cw2-main-search-submit" class="home-header-nav-search-submit fa-solid fa-chevron-right"></i>
+                   </form>
+                </div>
+            </button>
         
     </nav>
 

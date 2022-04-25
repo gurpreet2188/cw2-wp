@@ -42,11 +42,18 @@
 							<span class="sr-only">Next</span>
 						</a>
 					</div>
+					<div class="home-body-all-events-more">
+						<a href="<?php echo site_url('home/events/')?>">More Events <i class="fa fa-solid fa-chevron-right"></i></a>
+					</div>
 				</div>
 				<?php 
 				cw2_shop_common_posts ('Shops', 7, '');
 				?>
 				</div>
+
+			<div class="home-bktop">
+				<button class="home-bktop-btn">Scroll to Top &nbsp;&nbsp;<i class="fa-solid fa-arrow-up"></i></button>
+			</div>
 
 		</div>
 	

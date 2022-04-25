@@ -72,3 +72,48 @@ p {
     //     display: none;
     // }
   }
+
+.error {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap:3rem;
+    width: 80%;
+    margin: auto;
+    margin-top: 1rem;
+    
+    @include respond-to(mobile) {
+        margin-top: 4em;
+    }
+
+    &-title {
+        align-self: center;
+        justify-self: center;
+        color: var(--cw2-colorPrimary);
+
+        @include respond-to(mobile) {
+            align-self: center;
+            justify-self: center;
+            display: block;
+            text-align: center;
+            margin-top: 3rem;
+            color: var(--cw2-colorPrimary);
+            border-bottom: none;
+            & > h1 {
+
+                font-size: 1.5rem;
+            }
+
+        }
+    }
+    &> a {
+        color: rgb(var(--cw2-fontNormal));
+        text-decoration: underline;
+    }
+}
+
+.err {
+
+    color: var(--cw2-colorPrimary);
+}

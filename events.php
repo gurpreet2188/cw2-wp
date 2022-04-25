@@ -6,6 +6,9 @@
 <?php get_header()?>
 
 <div class="events">
+<div class="about-title">
+        <h2>Events</h2>
+    </div>
     <div class="events-crumb">
         <a href="<?php echo site_url()?>">Home</a>
         <p> <i class="fa-solid fa-chevron-right"></i> </p>
